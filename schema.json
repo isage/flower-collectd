@@ -1,0 +1,75 @@
+{
+    "tables" : [
+      {
+        "name": "netflow",
+        "db" : "default",
+        "fields": [
+          {
+            "name": "FlowDate",
+            "type": "Date",
+            "default": "toDate(FlowDateTime)"
+          },
+          {
+            "name": "FlowDateTime",
+            "type": "DateTime",
+            "from": "flowStartMilliseconds"
+          },
+          {
+            "name": "SourceIPV4",
+            "type": "UInt32",
+            "from": "sourceIPv4Address"
+          },
+          {
+            "name": "DestinationIPV4",
+            "type": "UInt32",
+            "from": "destinationIPv4Address"
+          },
+          {
+            "name": "SourcePort",
+            "type": "UInt16",
+            "from": "sourceTransportPort"
+          },
+          {
+            "name": "DestinationPort",
+            "type": "UInt16",
+            "from": "destinationTransportPort"
+          },
+          {
+            "name": "tcpControlBits",
+            "type": "UInt16",
+            "from": "tcpControlBits"
+          },
+          {
+            "name": "tcpOptions",
+            "type": "UInt64",
+            "from": "tcpOptions"
+          },
+          {
+            "name": "protocolIdentifier",
+            "type": "UInt8",
+            "from": "protocolIdentifier"
+          },
+          {
+            "name": "octetDeltaCount",
+            "type": "UInt64",
+            "from": "octetDeltaCount"
+          },
+          {
+            "name": "packetDeltaCount",
+            "type": "UInt64",
+            "from": "packetDeltaCount"
+          }
+        ],
+        "type" : "MergeTree",
+        "pkey": "FlowDate",
+        "keys": [
+          "SourceIPV4",
+          "DestinationIPV4",
+          "SourcePort",
+          "DestinationPort",
+          "protocolIdentifier"
+        ],
+        "granulate": 8192
+      }
+    ]
+}
